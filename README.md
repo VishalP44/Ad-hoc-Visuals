@@ -1,84 +1,46 @@
-#Ad_Hoc Insights: Data Analytics Project for Atliq Hardware
+# Ad-Hoc Insights: SQL Analytics for AtliQ Hardware
 
-Overview
+SQL-driven analysis of sales, pricing, and discount data for AtliQ Hardware (a fictional India-based computer hardware manufacturer), answering 10 ad-hoc business questions posed by the company's Data Analytics Director as part of a hiring case study.
 
-Ad_Hoc Insights is a comprehensive data analytics project aimed at delivering valuable insights for Atliq Hardware, a leading computer hardware manufacturer in India with a global footprint. The project addresses ten specific ad hoc data requests, enabling Atliq Hardware to make prompt and informed decisions.
+## Business Context
 
-Table of Contents
+AtliQ Hardware sells computer hardware and accessories across APAC, EU, LATAM, and NA through multiple channels (retailer, distributor, direct). Leadership needed quick, data-backed answers to recurring business questions — market coverage, product growth, customer discounts, and sales performance — without waiting on a full reporting cycle. This project answers ten of those requests directly against the company's sales database.
 
-	1.	Project Purpose
-	2.	Company Details
-	3.	Data and Tools
-	4.	Ad Hoc Requests
-	5.	Insights
-	6.	Contributors
-	7.	Acknowledgements
+## Analytical Approach
 
-Project Purpose
+Each request is answered with a standalone SQL query against a star-schema sales database (`dim_customer`, `dim_product`, `fact_sales_monthly`, `fact_gross_price`, `fact_manufacturing_cost`, `fact_pre_invoice_deductions`). Queries use CTEs, window functions (`RANK()`), and aggregations to go from raw transactional data to direct, decision-ready answers. Results are also visualized in Power BI for stakeholder-friendly reporting.
 
-Atliq Hardware aims to enhance its data analytics capabilities by recruiting junior data analysts. To assess candidates, Tony Sharma, the Data Analytics Director, created an SQL challenge that evaluates both technical and soft skills. This project addresses ten specific ad hoc data requests from the company.
+## Tech Stack
 
-Company Details
+- **SQL (MySQL syntax)** — all 10 queries in `AD Hoc SQL CODES/`
+- **Power BI** — `Ad hoc Visuals.pbix` for interactive dashboards on top of the same data
 
-Atliq Hardware is a prominent computer hardware and accessory manufacturer based in India, with a robust presence in APAC, EU, LATAM, and NA regions.
+## Ad-Hoc Requests Answered
 
-Data and Tools
+1. Markets where "Atliq Exclusive" operates in the APAC region
+2. % increase in unique products, 2020 vs. 2021
+3. Unique product counts by segment
+4. Segment with the largest unique-product growth, 2020 vs. 2021
+5. Products with the highest and lowest manufacturing cost
+6. Top 5 customers by average pre-invoice discount % (India, FY2021)
+7. Monthly gross sales for "Atliq Exclusive"
+8. Quarter of FY2020 with the highest total sold quantity (plus a labeled variant, `Request 8+.sql`)
+9. Sales channel with the highest gross sales and its % contribution (FY2021)
+10. Top 3 products by sold quantity in each division (FY2021)
 
-The project utilizes multiple data sources and a variety of tools for analysis and visualization. Specific details about the data and tools are included within the project files.
+## Key Insights
 
-Ad Hoc Requests
+- Notebooks, accessories, and peripherals drove the most growth in unique products from 2020 to 2021.
+- Flipkart received the highest average pre-invoice discount among Indian customers in FY2021.
+- November 2020 was "Atliq Exclusive"'s strongest month for gross sales; March 2020 was the weakest.
+- The retailer channel contributed the largest share of gross sales in FY2021.
 
-	1.	Market Presence: Identify markets where “Atliq Exclusive” operates in the APAC region.
-	2.	Product Increase: Calculate the percentage increase in unique products from 2020 to 2021.
-	3.	Product Counts by Segment: Report unique product counts for each segment.
-	4.	Segment Growth: Determine which segment saw the largest increase in unique products from 2020 to 2021.
-	5.	Manufacturing Costs: Identify products with the highest and lowest manufacturing costs.
-	6.	Top Customers: List the top 5 customers with the highest average pre-invoice discount percentages in India for FY2021.
-	7.	Gross Sales Report: Calculate the gross sales amount for “Atliq Exclusive” for each month.
-	8.	Quarterly Sales: Find the quarter in 2020 with the highest total sold quantity.
-	9.	Sales Channels: Identify the channel with the highest gross sales and its percentage contribution in FY2021.
-	10.	Top Products by Division: List the top 3 products with the highest total sold quantity in each division for FY2021.
+## How to Run
 
-Insights
+1. Load the AtliQ sales schema (`dim_customer`, `dim_product`, `fact_sales_monthly`, `fact_gross_price`, `fact_manufacturing_cost`, `fact_pre_invoice_deductions`) into a MySQL instance.
+2. Run any query in `AD Hoc SQL CODES/` directly against that schema — each file is commented with the original business question and expected output columns.
+3. Open `Ad hoc Visuals.pbix` in Power BI Desktop to explore the same data interactively.
 
-Key insights derived from the analysis include:
+## Notes
 
-	•	Significant Market Growth: Notebooks, accessories, and peripherals exhibited notable growth in manufacturing.
-	•	Top Customers: Flipkart received the largest average pre-invoice discount.
-	•	Sales Trends: November 2020 recorded the highest gross sales, while March 2020 saw the lowest.
-	•	Sales Channels: The retailer channel contributed the most to sales in FY2021.
-
-Detailed insights for each request are documented within the project files.
-
-Contributors
-
-	•	Vishal Patil (Project Lead)
-	•	Dhaval Patel
-	•	Bhavin Patel
-	•	Hemanand Vadivel
-
-Acknowledgements
-
-Special thanks to Atliq Hardware for providing the data used in this project. The project was guided by Tony Sharma, whose insights and leadership were invaluable.
-
-Visual Presentation and Code Repositories
-
-Interactive Dashboards and Visualizations
-
-	•	Tableau Dashboards
-	•	Power BI Reports
-
-Code Repositories
-
-	•	GitHub Repository
-
-Detailed Project Files
-
-	•	Project Documentation
-	•	SQL Queries and Scripts
-
-Conclusion
-
-This project exemplifies the ability to handle real-world data requests, utilizing SQL and other data analysis tools to generate actionable insights. It demonstrates technical proficiency, analytical thinking, and the ability to communicate complex data findings effectively.
-
-Feel free to adjust the links and content as necessary. This structure ensures that your portfolio highlights the key aspects of your project, making it easy for potential employers to understand your skills and the impact of your work.
+- Queries that join `fact_sales_monthly` to `fact_gross_price` are matched on both `product_code` and `fiscal_year`, since unit price varies by year — joining on `product_code` alone would mix prices across years and inflate/deflate the sales totals.
