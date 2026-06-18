@@ -10,6 +10,7 @@ SELECT C.channel,
        ROUND(SUM(G.gross_price*FS.sold_quantity/1000000), 2) AS Gross_sales_mln
 FROM fact_sales_monthly FS JOIN dim_customer C ON FS.customer_code = C.customer_code
 						   JOIN fact_gross_price G ON FS.product_code = G.product_code
+						                           AND FS.fiscal_year = G.fiscal_year
 WHERE FS.fiscal_year = 2021
 GROUP BY channel
 )

@@ -13,7 +13,7 @@ GROUP BY customer_code),
 (SELECT customer_code AS C, customer AS D FROM dim_customer
 WHERE market = 'India')
 
-SELECT TBL2.C AS customer_code, TBL2.D AS customer, ROUND (TBL1.B, 4) AS average_discount_percentage
+SELECT TBL2.C AS customer_code, TBL2.D AS customer, ROUND(TBL1.B, 4) AS average_discount_percentage
 FROM TBL1 JOIN TBL2
 ON TBL1.A = TBL2.C
 ORDER BY average_discount_percentage DESC
